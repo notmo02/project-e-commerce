@@ -41,6 +41,7 @@
     </nav>
 
     <div class="container mt-5">
+      
       <h2>Cart</h2>
       <div id="cart-list">
         <!-- Cart items will be dynamically inserted here -->
@@ -79,7 +80,7 @@
         const productList = document.querySelector("#product-list");
         let productsData = [];
         let productHTML = "";
-        fetch("products.json")
+        fetch('products.json')
           .then((response) => response.json())
           .then((data) => {
             productsData = data.products;
@@ -138,7 +139,12 @@
               })
             }
             function removeFromCart(event){
-              
+              const productId=event.target.getAttribute('data-id');
+              const productIndex=cart.findIndex(
+                (product) => product.id == productId,
+              );
+              cart.splice(productIndex,1)
+              renderCart();
             }
           });
       });

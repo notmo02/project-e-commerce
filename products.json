@@ -22,9 +22,9 @@
       "image": "https://placehold.co/100"
     },
     {
-      "id": 1,
-      "name": "Product 1",
-      "description": "Description for product 1",
+      "id": 4,
+      "name": "Product 4",
+      "description": "Description for product 4",
       "price": 10.99,
       "image": "https://placehold.co/100"
     }
