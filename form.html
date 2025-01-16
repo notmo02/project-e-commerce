@@ -10,6 +10,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,17 +42,14 @@
     </nav>
 
     <div class="container mt-5">
-      <h2>Cart</h2>
-      <form action="checkout.html" method = "get">
-        <label for = "firstName">First Name</label>
-        <input type = "text" name = "firstName" value = "" /><br />
-        <label for = "lastName">Last Name</label>
-
-        <input type = "text" name = "lastName" value="" /><br />
-        <button type = "submit">Submit</button>
-      </form>
-      </div>
-   
+      <form action="checkout.html" method="get">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" value="" /><br />
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" value="" /><br />
+        <button type="submit">Submit</button>
+        </form>
+    </div>
 
     <footer class="bg-light text-center py-3">
       <p>&copy; 2025 E-commerce Website. All rights reserved.</p>
@@ -106,11 +104,16 @@
               const cartList = document.getElementById("cart-list");
               let cartItem = "";
               cart.forEach((product) => {
-                cartItem += `<div class="col-md-4">
+                cartItem += 
+                `<div class="col-md-4">
           <div class="card mb-4">
               <div class="card-body">
-                  <h5 class="card-title">${product.name}</h5>
-                  <p class="card-text">${product.price}</p>
+                <div class="cart-item">
+                  <h5>$${product.name}</h5>
+                  <p>$${product.price}</p>
+                  <input type="hidden" name="id" value="${product.id}"/>
+                  <input type="hidden" name="name" value="${product.name}"/>
+                  <input type="hidden" name="price" value="${product.price}"/>
                   <button class="btn btn-danger remove-from-cart" data-id="${product.id}">
                     remove
                     </button>
@@ -129,8 +132,6 @@
             }
           });
       });
-
-    
     </script>
   </body>
 </html>

@@ -10,9 +10,9 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
   />
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
     <button
       class="navbar-toggler"
@@ -39,17 +39,33 @@
       </ul>
     </div>
   </nav>
-
+  
     <div class="container mt-5">
+       <form id="checkout-form" action="confirmation.html" method="get" >
       <h1>Checkout</h1>
       <div id="cart-summary">
         <!-- Cart summary will be dynamically inserted here -->
       </div>
-      <form id="checkout-form">
+      <h2>Subtotal</h2>
+      <div id="subtotal">
+        <!-- Subtotal will display here-->
+         
+      </div>
+      <h2>Tax</h2>
+      <div id="tax">
+         <!-- Tax will display here-->
+
+      </div>
+      <h2>Total</h2>
+      <div id="total">
+         <!-- Total will display here-->
+
+      </div>
+     
         <h2>Login</h2>
+        <h3 id="error"></h3>
         <div class="form-group">
-          <label for="email"
-            >Email address <span class="text-danger">*</span></label
+          <label for="email">Email address <span class="text-danger">*</span></label
           >
           <input
             type="email"
@@ -60,8 +76,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="password"
-            >Password <span class="text-danger">*</span></label
+          <label for="password">Password <span class="text-danger">*</span></label
           >
           <input
             type="password"
@@ -73,8 +88,7 @@
         </div>
         <h2>Shipping Address</h2>
         <div class="form-group">
-          <label for="address"
-            >Address <span class="text-danger">*</span></label
+          <label for="address">Address <span class="text-danger">*</span></label
           >
           <input
             type="text"
@@ -170,26 +184,88 @@
           />
         </div>
         <div id="error-message" class="text-danger"></div>
+        <button type="reset" class="btn btn-secondary">Reset</button>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+  <script>
+   document.addEventListener("DOMContentLoaded", function () {
+        const query = new URLSearchParams(window.location.search);
+        const cartItems = Array.from(query.entries()); // Get query parameters as key-value pairs
+        
+        // Function to calculate subtotal, tax and total
+        function calculatePrices() {
+          let subtotal = 0;
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const query = new URLSearchParams(windo.location.search);
-        console.log(Array.from(query.entries()));
-        const cart = Array.from(query.entries());
+          
+          // Loop through query parameters and sum prices
+          cartItems.forEach(([key, value]) => {
+            if (key === 'price') {
+              subtotal += parseFloat(value); // Add price to subtotal
+            }
+          });
+
+          const tax = subtotal * 0.15; // 15% tax
+          const total = subtotal + tax;
+
+          // Update the UI with the calculated values
+          document.getElementById('subtotal').textContent = "$"+subtotal.toFixed(2);
+          document.getElementById('tax').textContent = "$"+tax.toFixed(2);
+          document.getElementById('total').textContent = "$"+total.toFixed(2);
+        }
+
+        // Render cart items in the cart-summary section
         function renderCart() {
           const cartList = document.getElementById('cart-summary');
-          let cartItem = '';
-          for (let [key, value] of cart) {
-            console.log(key, value);
-            cartItem += `<p> $(key)${value} </p>`;
+          let cartItemHTML = '';
+
+          if (cartItems.length > 0) {
+            cartItems.forEach(([key, value]) => {
+              cartItemHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+            });
+          } else {
+            cartItemHTML = '<p>No items in cart</p>';
           }
-          cartList.innerHTML = cartItem;
+
+          cartList.innerHTML = cartItemHTML;
+          calculatePrices(); // Calculate and update prices
         }
-        renderCart();
+
+        renderCart(); // Initial rendering of cart items and prices
       });
+      const email= document.getElementById("email");
+      const password=document.getElementById("password");
+      const errorElement = document.getElementById("error");
+      const form=document.getElementById("checkout-form");
+      form.addEventListener("submit" , (e) => {
+        let messages =[]
+        if (password.value.length <= 6 ){
+          messages.push("Password must be more than 6 characters");
+        }
+        if(password.value.length>= 20){
+          messages.push('Password must be less than 20 characters');
+        }
+        if (messages.length>0){
+          e.preventDefault()
+          errorElement.innerText = messages.join(', ');
+        }
+      })
+      const cartItems = [];
+ let cartItem = '';
+ for (let i = 0; i < ids.length; i++) {
+     cartItem += `
+     <div class="cart-item">
+       <h5>${names[i]}</h5>
+       <p>${parseFloat(prices[i]).toFixed(2)}</p>
+       <input type="hidden" name="id" value="${ids[i]}" />
+       <input type="hidden" name="name" value="${names[i]}" />
+       <input type="hidden" name="price" value="${prices[i]}" />
+     </div>
+     `
+   }
+cartSummary.innerHTML = cartItem
+   document.querySelector('#checkout-form').addEventListener('submit', submitCart);
+
     </script>
   </body>
 </html>

@@ -10,6 +10,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,12 +42,13 @@
     </nav>
 
     <div class="container mt-5">
-      
+      <form action="checkout.html" method="get">
       <h2>Cart</h2>
       <div id="cart-list">
         <!-- Cart items will be dynamically inserted here -->
       </div>
       <button class="btn btn-primary" id="checkout-button">Checkout</button>
+      </form>
     </div>
 
     <div class="container mt-5">
@@ -55,15 +57,21 @@
         <!-- Products will be dynamically inserted here -->
         <div class="col-md-4">
           <div class="card mb-4">
-              <img src="https://placehold.co/100" class="card-img-top" alt="Product 1">
-              <div class="card-body">
-                  <h5 class="card-title">Product 1</h5>
-                  <p class="card-text">$10.99</p>
-                  <p class="card-text">Description for product 1</p>
-                  <button class="btn btn-primary add-to-cart" data-id="1">Add to Cart</button>
-              </div>
+            <img
+              src="https://placehold.co/100"
+              class="card-img-top"
+              alt="Product 1"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Product 1</h5>
+              <p class="card-text">$10.99</p>
+              <p class="card-text">Description for product 1</p>
+              <button class="btn btn-primary add-to-cart" data-id="1">
+                Add to Cart
+              </button>
+            </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
 
@@ -80,7 +88,7 @@
         const productList = document.querySelector("#product-list");
         let productsData = [];
         let productHTML = "";
-        fetch('products.json')
+        fetch("products.json")
           .then((response) => response.json())
           .then((data) => {
             productsData = data.products;
@@ -89,9 +97,10 @@
           <div class="card mb-4">
               <img src="https://placehold.co/100" class="card-img-top" alt="Product 1">
               <div class="card-body">
-                  <h5 class="card-title">${product.name}</h5>
-                  <p class="card-text">${product.price}</p>
-                  <p class="card-text">${product.description}</p>
+            
+                 <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">${product.price}</p>
+                <p class="card-text">${product.description}</p>
                   <button class="btn btn-primary add-to-cart" data-id="${product.id}">Add to Cart</button>
               </div>
           </div>
@@ -123,8 +132,11 @@
                 cartItem += `<div class="col-md-4">
           <div class="card mb-4">
               <div class="card-body">
-                  <h5 class="card-title">${product.name}</h5>
-                  <p class="card-text">${product.price}</p>
+                  <h5>${product.name}</h5>
+                  <p>$${product.price}</p>
+                  <input type="hidden" name="id" value="${product.id}"/>
+                  <input type="hidden" name="name" value="${product.name}"/>
+                  <input type="hidden" name="price" value="${product.price}"/>
                   <button class="btn btn-danger remove-from-cart" data-id="${product.id}">
                     remove
                     </button>
@@ -148,8 +160,6 @@
             }
           });
       });
-
-    
     </script>
   </body>
 </html>
