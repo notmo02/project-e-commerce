@@ -41,6 +41,7 @@
       </div>
     </nav>
 
+
     <div class="container mt-5">
       <form action="checkout.html" method="get">
         <label for="firstName">First Name</label>
@@ -50,6 +51,7 @@
         <button type="submit">Submit</button>
         </form>
     </div>
+
 
     <footer class="bg-light text-center py-3">
       <p>&copy; 2025 E-commerce Website. All rights reserved.</p>
@@ -86,7 +88,7 @@
               button.addEventListener("click", addToCart);
             });
             const cart = [];
-            
+           
             function addToCart(event) {
               console.log(event.target.getAttribute("data-id"));
               const productId = event.target.getAttribute("data-id");
@@ -104,7 +106,7 @@
               const cartList = document.getElementById("cart-list");
               let cartItem = "";
               cart.forEach((product) => {
-                cartItem += 
+                cartItem +=
                 `<div class="col-md-4">
           <div class="card mb-4">
               <div class="card-body">
@@ -128,7 +130,7 @@
               })
             }
             function removeFromCart(event){
-              
+             
             }
           });
       });
